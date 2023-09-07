@@ -1,10 +1,33 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+Home
 {% endblock %}
 
 {% block body %}
-<h1>To-Do List</h1>
+<div class="todo-home">
+    <h1>TODO Titan</h1>
+    <div class="form-create">
+        <form action="/create" method="post">
+            <input autocomplete="off" name="task" id="enter" placeholder="Enter a task">
+            <button type="submit" id="add">Add</button>
+        </form>
+    </div>
 
+
+    <ul> <!--TODO: order settings (date added, date due, custom)-->
+        {% for task in tasks %}
+        <form action="/update" method="post">
+            <input type="hidden" name="id" value="{{ task.id }}">
+            <input name="task" value="{{ task.task }}">
+            <button type="submit">Update</button>
+        </form>
+        <form action="/delete" method="post">
+            <input type="hidden" name="id" value="{{ task.id }}">
+            <button type="submit">Delete</button>
+        </form>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
