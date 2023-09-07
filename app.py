@@ -11,8 +11,3 @@ def homepage():
     else:
         tasks.append(request.form.get("task"))
         return render_template("index.html", tasks=tasks)
-
-
-@app.route("/create", methods=["POST"])
-def create():
-    return render_template("task_success.html", name=request.args.get("name", "world"))

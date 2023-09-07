@@ -12,17 +12,18 @@ code {
         monospace;
 }
 
-
-.App {
+.todo-task {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    background-color: tan;
     text-align: center;
+
+    
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-#add {
+#add, #delete{
     background-color: #282c34;
     border: none;
     color: white;
@@ -64,7 +65,7 @@ h1 {
     display: inline-block;
     font-size: 1rem;
     margin: 0.5rem 0.25rem;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .form-create {
@@ -75,21 +76,5 @@ h1 {
 
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
 
-.App-link {
-    color: #61dafb;
-}
 
-.small {
-    font-size: 0.75rem;
-}
