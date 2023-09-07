@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -16,6 +16,10 @@ def homepage():
         return render_template("index.html", tasks=tasks)
 
 
-@app.route("/create", methods=["POST"])
-def create():
-    return render_template("task_success.html", name=request.args.get("name", "world"))
+@app.route("/delete", methods=["POST"])
+def delete():
+    # TODO remove task from database
+    return redirect("/")
+
+
+    
