@@ -12,6 +12,7 @@ code {
         monospace;
 }
 
+
 .App {
     text-align: center;
 }
@@ -19,6 +20,59 @@ code {
 .App-logo {
     height: 40vmin;
     pointer-events: none;
+}
+
+#add {
+    background-color: #282c34;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 0.5rem 0.25rem;
+    cursor: pointer;
+}
+
+.todo-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 0.5rem 0.25rem;
+    justify-content: center;
+    text-align: center;
+
+}
+
+::placeholder {
+    color: grey;
+}
+
+#enter {
+    background-color: #282c34;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 0.5rem 0.25rem;
+    cursor: pointer; 
+}
+
+.form-create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .App-header {
@@ -34,10 +88,6 @@ code {
 
 .App-link {
     color: #61dafb;
-}
-
-.heart {
-    color: #ff0000;
 }
 
 .small {
