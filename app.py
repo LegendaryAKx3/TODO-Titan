@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect
+from cs50 import SQL
 
 app = Flask(__name__)
+
+# Initialize database with cs50 library
+db = SQL("sqlite:///todotitan.db")
 
 # SQL table structure
 # CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username UNIQUE TEXT NOT NULL, hash TEXT NOT NULL);
