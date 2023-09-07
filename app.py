@@ -10,4 +10,5 @@ def hello_world():
 
 @app.route("/create", methods=["POST"])
 def create():
-    return render_template("task_success.html", name=request.args.get("name", "world"))
+    task = request.form.get("task")
+    return render_template("task_success.html", task=task)
