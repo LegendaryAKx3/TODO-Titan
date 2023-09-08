@@ -15,13 +15,13 @@ Session(app)
 db = SQL("sqlite:///todotitan.db")
 
 # SQL table structure
-# CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username UNIQUE TEXT NOT NULL, hash TEXT NOT NULL);
-# CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, user_id INTEGER NOT NULL);
+# CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username UNIQUE TEXT NOT NULL, hash TEXT NOT NULL);
+# CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, uuid INTEGER NOT NULL);
 def login_required(f):
     '''Code from CS50 finance'''
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
+        if session.get("uuid") is None:
             return redirect("/login")
         return f(*args, **kwargs)
 
@@ -31,6 +31,7 @@ def error(message):
     return render_template("error.html", message=message)
 
 @app.route("/", methods=["GET", "POST"])
+@login_required
 def homepage():
     tasks = []
     if request.method == "GET":
@@ -41,12 +42,14 @@ def homepage():
 
 
 @app.route("/delete", methods=["POST"])
+@login_required
 def delete():
     # TODO remove task from database
     return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """Code based on login from CS50 finance"""
     # Reset session
     session.clear()
 
@@ -56,13 +59,13 @@ def login():
         if not request.form.get("username") or not request.form.get("password"):
             return error("Submitted fields cannot be blank")
         
-        user = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        user = db.execute("SELECT * FROM accounts WHERE username = ?", request.form.get("username"))
         # Ensure username exists and password is correct
         if len(user) != 1 or not check_password_hash(user[0]["hash"], request.form.get("password")):
             return error("Invalid login information")
 
         # store account login status until session is cleared
-        session["account_id"] = user[0]["id"]
+        session["uuid"] = user[0]["id"]
         return redirect("/")
 
     else:
@@ -70,12 +73,13 @@ def login():
     
 @app.route("/logout")
 def logout():
+    '''Code based on logout from CS50 finance'''
     session.clear()
     return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register user"""
+    """Register user (My code from CS50 Finance)"""
     if request.method == "POST":
         # if form was submitted via post, get form info and check validity
         username = request.form.get("username")
@@ -85,7 +89,7 @@ def register():
         if not username:
             return error("Username field cannot be empty")
 
-        for entry in db.execute("SELECT username FROM users;"):
+        for entry in db.execute("SELECT username FROM accounts;"):
             if username == entry["username"]:
                 return error("Username is already taken")
 
@@ -96,7 +100,7 @@ def register():
             return error("Password Must be at Least 8 Characters Long")
 
         db.execute(
-            "INSERT INTO users (username, hash) VALUES(?, ?);",
+            "INSERT INTO accounts (username, hash) VALUES(?, ?);",
             username,
             generate_password_hash(password),
         )
