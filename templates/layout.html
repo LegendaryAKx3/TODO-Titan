@@ -20,25 +20,23 @@
 
 </head>
 
-<div>
-    {% if session["user_id"] %}
-        <ul>
-            <li><a href="/">Home</a></li>
-        </ul>
-        <ul class="navbar-nav ms-auto mt-2">
-            <li><a href="/logout">Log Out</a></li>
-        </ul>
-    {% else %}
-        <ul class="navbar-nav ms-auto mt-2">
-            <li><a href="/register">Register</a></li>
-            <li><a href="/login">Log In</a></li>
-        </ul>
-    {% endif %}
-</div>
-
 <body>
     <div class="hero">
-        <!--TODO-->
+        <div>
+            {% if session["user_id"] %}
+                <ul>
+                    <li><a href="/">Home</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto mt-2">
+                    <li><a href="/logout">Log Out</a></li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav ms-auto mt-2">
+                    <li><a href="/register">Register</a></li>
+                    <li><a href="/login">Log In</a></li>
+                </ul>
+            {% endif %}
+        </div>
     </div>
     <div class="body">
         {% block body %}{% endblock %}
