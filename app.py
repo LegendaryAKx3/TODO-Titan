@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect
 from cs50 import SQL
+from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
 
@@ -10,6 +10,7 @@ db = SQL("sqlite:///todotitan.db")
 # SQL table structure
 # CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username UNIQUE TEXT NOT NULL, hash TEXT NOT NULL);
 # CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL);
+
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
@@ -27,4 +28,7 @@ def delete():
     return redirect("/")
 
 
-
+@app.route("/create", methods=["POST"])
+def create():
+    task = request.form.get("task")
+    return render_template("task_success.html", task=task)
