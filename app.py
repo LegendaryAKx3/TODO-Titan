@@ -56,7 +56,7 @@ def login():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Check username and password are submitted
-        if not request.form.get("username") or not request.form.get("password"):
+        if (not request.form.get("username")) or (not request.form.get("password")):
             return error("Submitted fields cannot be blank")
         
         user = db.execute("SELECT * FROM accounts WHERE username = ?", request.form.get("username"))
@@ -95,7 +95,7 @@ def register():
 
         # check password valididty
         if password != confirmation or (not password) or (not confirmation):
-            return error("Invalid Password")
+            return error("Invalid Password or Confirmation")
         elif len(password) < 8:
             return error("Password Must be at Least 8 Characters Long")
 
