@@ -22,7 +22,11 @@
 
 <body>
     <div class="hero">
-        <!--TODO-->
+        {% if session["uuid"] %}
+        <form action="/logout" method="get">
+            <button type="submit" id="logout-btn">Log Out</button>
+        </form>
+        {% endif %}
     </div>
     <div class="body">
         {% block body %}{% endblock %}

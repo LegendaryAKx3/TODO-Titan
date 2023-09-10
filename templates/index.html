@@ -5,26 +5,22 @@ Home
 {% endblock %}
 
 {% block body %}
-<div class="todo-home">
-    <h1>TODO Titan</h1>
-    <div class="form-create">
-        <form action="/" method="post">
-            <input autocomplete="off" name="task" id="enter" placeholder="Enter a task">
-            <button type="submit" id="add">Add</button>
-        </form>
-    </div>
-
-
-    <ul> <!--TODO: order settings (date added, date due, custom)-->
-        {% for task in tasks %}
-        <div class="todo-task">
-            <p>{{ task }}</p>
-            <form action="/delete" method="post">
-                <input type="hidden" name="id" value="{{ task.id }}">
-                <button type="submit" id="delete">Done</button>
-            </form>
-        </div>
-        {% endfor %}
-    </ul>
+<div id="todo-index">
+    <h1 id="index-title">TODO Titan</h1>
+    <form action="/" method="post">
+        <input autocomplete="off" name="task" id="task-form" placeholder="Enter a task">
+        <button type="submit" id="add-btn">Add</button>
+    </form>
 </div>
+
+<!--TODO: order settings (date added, date due, custom)-->
+<ul id="todo-list">
+    {% for task in tasks %}
+    <p>{{ task }}</p>
+    <form action="/delete" method="post">
+        <input type="hidden" name="id" value="{{ task.id }}">
+        <button type="submit" id="delete">Done</button>
+    </form>
+    {% endfor %}
+</ul>
 {% endblock %}
