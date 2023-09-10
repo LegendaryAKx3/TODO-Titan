@@ -22,18 +22,11 @@
 
 <body>
     <div class="hero">
-        <div>
-            {% if session["uuid"] %}
-                <a href="/">Home</a>
-                <br>
-                <a href="/logout">Log Out</a>
-
-            {% else %}
-                <a href="/register">Register</a>
-                <br>
-                <a href="/login">Log In</a>
-            {% endif %}
-        </div>
+        {% if session["uuid"] %}
+        <form action="/logout" method="get">
+            <button type="submit" id="logout-btn">Log Out</button>
+        </form>
+        {% endif %}
     </div>
     <div class="body">
         {% block body %}{% endblock %}
