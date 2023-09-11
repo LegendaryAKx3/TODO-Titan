@@ -45,6 +45,13 @@ def homepage():
     else:
         db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
         return redirect("/")
+    
+@app.route("/section-create", methods=["POST"])
+@login_required
+def create_section():
+    name = request.form.get("section")
+    return redirect("/")
+
 
 
 @app.route("/delete", methods=["POST"])

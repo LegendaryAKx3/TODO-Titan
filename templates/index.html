@@ -7,10 +7,21 @@ Home
 {% block body %}
 <div id="todo-index">
     <h1 id="index-title">TODO Titan</h1>
-    <form action="/" method="post">
-        <input autocomplete="off" name="task" id="task-form" placeholder="Enter a task">
-        <button type="submit" id="add-btn">Add</button>
-    </form>
+    <div id="add-task">
+        <h4>Add Task</h4>
+        <form action="/" method="post">
+            <input autocomplete="off" name="task" id="task-form" placeholder="Enter a task">
+            <button type="submit" id="add-btn">Add</button>
+        </form>
+    </div>
+    <br>
+    <div id="add-section">
+        <h4>Add Section</h4>
+        <form action="/section-create" method="post">
+            <input autocomplete="off" name="section" placeholder="Section Name">
+            <button type="submit">Create</button>
+        </form>
+    </div>
 </div>
 
 <!--TODO: order settings (date added, date due, custom)-->
