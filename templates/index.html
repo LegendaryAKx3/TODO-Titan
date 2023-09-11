@@ -18,7 +18,7 @@ Home
     {% for task in tasks %}
     <p>{{ task.task_text }}</p>
     <form action="/delete" method="post">
-        <input type="hidden" name="id" value="{{ task.id }}">
+        <input type="hidden" name="id" value="{{ task.task_id }}">
         <button type="submit" id="delete">Done</button>
     </form>
     {% endfor %}
