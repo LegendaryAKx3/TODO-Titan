@@ -49,7 +49,8 @@ def homepage():
 @app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-    # Delete task where task and user id match up, won't go through if user is not logged in to the account corresponding to the task
+    # Delete task where task and user id match up 
+    # won't go through if user is not logged in to the account corresponding to the task
     db.execute("DELETE FROM tasks WHERE (uuid = ? AND task_id = ?);", session["uuid"], request.form.get("id"))
     return redirect("/")
 
