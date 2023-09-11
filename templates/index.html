@@ -16,9 +16,9 @@ Home
 <!--TODO: order settings (date added, date due, custom)-->
 <ul id="todo-list">
     {% for task in tasks %}
-    <p>{{ task }}</p>
+    <p>{{ task.task_text }}</p>
     <form action="/delete" method="post">
-        <input type="hidden" name="id" value="{{ task.id }}">
+        <input type="hidden" name="id" value="{{ task.task_id }}">
         <button type="submit" id="delete">Done</button>
     </form>
     {% endfor %}

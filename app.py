@@ -39,18 +39,18 @@ def error(message):
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def homepage():
-    tasks = []
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", tasks = db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]))
     else:
-        tasks.append(request.form.get("task"))
+        db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
         return redirect("/")
 
 
 @app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-    # TODO remove task from database
+    # Delete task where task and user id match up, won't go through if user is not logged in to the account corresponding to the task
+    db.execute("DELETE FROM tasks WHERE (uuid = ? AND task_id = ?);", session["uuid"], request.form.get("id"))
     return redirect("/")
 
 
