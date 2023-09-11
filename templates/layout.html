@@ -27,7 +27,9 @@
             <button type="submit" id="logout-btn">Log Out</button>
         </form>
         {% else %}
-        <a href="/register">Register</a>
+        <form action="/register" method="get">
+            <button type="submit" class="green-btn">Register</button>
+        </form>
         {% endif %}
     </div>
     <div class="body">
