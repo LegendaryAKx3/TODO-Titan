@@ -41,7 +41,9 @@ def error(message):
 @login_required
 def homepage():
     if request.method == "GET":
-        return render_template("index.html", tasks = db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]))
+        return render_template("index.html", 
+                               tasks = db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]), 
+                               sections=db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"]))
     else:
         db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
         return redirect("/")
@@ -50,6 +52,13 @@ def homepage():
 @login_required
 def create_section():
     name = request.form.get("section")
+    # Prevent duplicate sections
+    user_sections = db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"])
+    for section in user_sections:
+        if section["section_name"].lower() == name.lower():
+            error("Duplicate section name")
+    
+    db.execute("INSERT INTO sections (section_name, uuid) VALUES(?, ?);", name.title(), session["uuid"])
     return redirect("/")
 
 
