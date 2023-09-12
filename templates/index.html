@@ -41,6 +41,14 @@ Home
 <!--Render all other sections-->
 {% for section in sections %}
     <h3>{{ section.section_name }}</h3>
+    <form method="post" action="/section-delete">
+        <input type="hidden" name="section-id" value="{{ section.section_id }}">
+        <button type="submit">Delete Section</button>
+    </form>
+    <form method="post" action="/section-delete-all">
+        <input type="hidden" name="section-id" value="{{ section.section_id }}">
+        <button type="submit">Delete Section and Tasks</button>
+    </form>
     <ul id="todo-list">
         {% for task in tasks %}
             {% if task.section_id == section.section_id %}
