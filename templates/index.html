@@ -25,13 +25,32 @@ Home
 </div>
 
 <!--TODO: order settings (date added, date due, custom)-->
+<!--Main section-->
+<h3>Main</h3>
 <ul id="todo-list">
     {% for task in tasks %}
-    <p>{{ task.task_text }}</p>
-    <form action="/delete" method="post">
-        <input type="hidden" name="id" value="{{ task.task_id }}">
-        <button type="submit" id="delete">Done</button>
-    </form>
+        {% if task.section_id == None %}
+            <p>{{ task.task_text }}</p>
+            <form action="/delete" method="post">
+                <input type="hidden" name="id" value="{{ task.task_id }}">
+                <button type="submit" id="delete">Done</button>
+            </form>
+        {% endif %}
     {% endfor %}
 </ul>
+<!--Render all other sections-->
+{% for section in sections %}
+    <h3>{{ section.section_name }}</h3>
+    <ul id="todo-list">
+        {% for task in tasks %}
+            {% if task.section_id == section.section_id %}
+                <p>{{ task.task_text }}</p>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="id" value="{{ task.task_id }}">
+                    <button type="submit" id="delete">Done</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endfor %}
 {% endblock %}
