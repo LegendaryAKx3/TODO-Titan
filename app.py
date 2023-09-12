@@ -61,6 +61,26 @@ def create_section():
     db.execute("INSERT INTO sections (section_name, uuid) VALUES(?, ?);", name.title(), session["uuid"])
     return redirect("/")
 
+@app.route("/section-delete-all", methods=["POST"])
+@login_required
+def delete_section_all():
+
+    # Delete section from section table where section and user id match up 
+    # won't go through if user is not logged in to the account corresponding to the section
+    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id", session["uuid"]))
+
+    # delete tasks within deleted section
+    db.execute("DELETE FROM tasks WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
+    return redirect("/")
+
+@app.route("/section-delete", methods=["POST"])
+@login_required
+def delete_section():
+    # Delete section where section and user id match up 
+    # won't go through if user is not logged in to the account corresponding to the section
+    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id", session["uuid"]))
+    return redirect("/")
+
 
 
 @app.route("/delete", methods=["POST"])
