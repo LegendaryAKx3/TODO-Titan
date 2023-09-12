@@ -64,10 +64,10 @@ def create_section():
 @app.route("/section-delete-all", methods=["POST"])
 @login_required
 def delete_section_all():
-
+    '''Delete section and tasks within it'''
     # Delete section from section table where section and user id match up 
     # won't go through if user is not logged in to the account corresponding to the section
-    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id", session["uuid"]))
+    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
 
     # delete tasks within deleted section
     db.execute("DELETE FROM tasks WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
@@ -76,9 +76,13 @@ def delete_section_all():
 @app.route("/section-delete", methods=["POST"])
 @login_required
 def delete_section():
+    '''Delete section and send all contained tasks to main section'''
     # Delete section where section and user id match up 
     # won't go through if user is not logged in to the account corresponding to the section
-    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id", session["uuid"]))
+    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
+
+    # Send all contained tasks to main section
+    db.execute("UPDATE tasks SET section_id = NULL WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
     return redirect("/")
 
 
