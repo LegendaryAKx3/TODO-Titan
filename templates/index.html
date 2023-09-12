@@ -11,6 +11,12 @@ Home
         <h4>Add Task</h4>
         <form action="/" method="post">
             <input autocomplete="off" name="task" id="task-form" placeholder="Enter a task">
+            <select name="section">
+                <option selected value>Main</option>
+                {% for section in sections %}
+                <option value="{{ section.section_id }}">{{ section.section_name }}</option>
+                {% endfor %}
+            </select>
             <button type="submit" id="add-btn">Add</button>
         </form>
     </div>

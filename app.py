@@ -45,7 +45,11 @@ def homepage():
                                tasks = db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]), 
                                sections=db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"]))
     else:
-        db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
+        # Only add section id to db if section is specified
+        if request.form.get("section") != "":
+            db.execute("INSERT INTO tasks (task_text, uuid, section_id) VALUES(?, ?, ?);", request.form.get("task"), session["uuid"], request.form.get("section"))
+        else:
+            db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
         return redirect("/")
     
 @app.route("/section-create", methods=["POST"])
