@@ -173,8 +173,8 @@ def register():
         if password != confirmation or (not password) or (not confirmation):
             return error("Invalid Password or Confirmation")
 
-        elif len(password) < 8:
-            return error("Password Must be at Least 8 Characters Long")
+        elif (len(password) < 8) or (password.lower() == password):
+            return error("Password Must be at Least 8 Characters Long and Contain A Capital Letter")
 
         db.execute(
             "INSERT INTO accounts (username, hash) VALUES(?, ?);",
