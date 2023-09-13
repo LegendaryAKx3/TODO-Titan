@@ -83,6 +83,9 @@ def move_between_section():
     '''Move task between sections'''
     section_to = request.form.get("to-section")
     task_id = request.form.get("task-id")
+    if db.execute("SELECT * FROM tasks WHERE(task_id = ?);", task_id)[0]["uuid"] != session["uuid"]:
+        error("Invalid request")
+
     if section_to != "":
         db.execute("UPDATE tasks SET section_id = ? WHERE (task_id = ? AND uuid = ?);", section_to, task_id, session["uuid"] )
     else:
