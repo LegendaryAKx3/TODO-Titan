@@ -20,8 +20,4 @@ To-do list webapp written with flask. Users are able to log in to unique and sec
 
 #### Completing tasks
 
-to run:
-
-```
-flask --debug run
-```
+#### Sections
