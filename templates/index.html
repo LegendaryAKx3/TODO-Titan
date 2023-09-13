@@ -41,6 +41,17 @@ Home
                 <input type="hidden" name="id" value="{{ task.task_id }}">
                 <button type="submit" id="delete">Done</button>
             </form>
+            <form action="/move-between-section" method="post">
+                <input type="hidden" name="task-id" value="{{ task.task_id }}">
+                <h5>Move To:</h5>
+                <select name="to-section">
+                    <option selected value>Main</option>
+                    {% for section in sections %}
+                        <option value="{{ section.section_id}}">{{ section.section_name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Move</button>
+            </form>
         {% endif %}
     {% endfor %}
 </ul>
@@ -73,8 +84,6 @@ Home
                         {% endfor %}
                     </select>
                     <button type="submit">Move</button>
-
-
                 </form>
             {% endif %}
         {% endfor %}
