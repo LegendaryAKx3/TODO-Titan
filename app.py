@@ -77,6 +77,12 @@ def delete_section_all():
     db.execute("DELETE FROM tasks WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
     return redirect("/")
 
+@app.route("/move-between-section")
+@login_required
+def move_between_section():
+    '''Move task between sections'''
+    
+
 @app.route("/section-delete", methods=["POST"])
 @login_required
 def delete_section():
