@@ -1,18 +1,23 @@
 {% extends "layout.html" %}
 {% block title %}
-    Register
+Register
 {% endblock %}
 {% block body%}
-    <form action="/register" method="post">
-        <div>
-            <input autocomplete="off" autofocus id="username" name="username" placeholder="Username" type="text">
-        </div>
-        <div>
-            <input id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <div>
-            <input id="password" name="confirmation" placeholder="Confirmation" type="password">
-        </div>
-        <button type="submit">Register</button>
+
+<div class="register-page">
+    <h1 id="register-title">TODO Titan</h1>
+    <form action="/register" method="post" id="register-form">
+        <input autocomplete="off" autofocus id="username" name="username" placeholder="Username" type="text">
+        <input id="password" name="password" placeholder="Password" type="password">
+        <input id="password" name="confirmation" placeholder="Confirmation" type="password">
+        <button class="btn btn-primary" type="submit" id="register-btn">Register</button>
     </form>
-{% endblock %}
+    <div class="register-bottom-btns">
+        <br>
+        <form action="/login" method="get" id="login-link">
+            <p>Already have an account? <a href="/login">Log In</a></p>
+        </form>
+    </div>
+
+
+    {% endblock %}
