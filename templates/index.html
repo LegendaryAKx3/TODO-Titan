@@ -7,20 +7,86 @@ Home
 {% block body %}
 <div id="todo-index">
     <h1 id="index-title">TODO Titan</h1>
-    <form action="/" method="post">
-        <input autocomplete="off" name="task" id="task-form" placeholder="Enter a task">
-        <button type="submit" id="add-btn">Add</button>
-    </form>
+    <div id="add-task">
+        <h4>Add Task</h4>
+        <form action="/" method="post">
+            <input autocomplete="off" name="task" id="task-form" placeholder="Enter a task">
+            <select name="section">
+                <option selected value>Main</option>
+                {% for section in sections %}
+                <option value="{{ section.section_id }}">{{ section.section_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" id="add-btn">Add</button>
+        </form>
+    </div>
+    <br>
+    <div id="add-section">
+        <h4>Add Section</h4>
+        <form action="/section-create" method="post">
+            <input autocomplete="off" name="section" placeholder="Section Name">
+            <button type="submit">Create</button>
+        </form>
+    </div>
 </div>
 
 <!--TODO: order settings (date added, date due, custom)-->
+<!--Main section-->
+<h3>Main</h3>
 <ul id="todo-list">
     {% for task in tasks %}
-    <p>{{ task.task_text }}</p>
-    <form action="/delete" method="post">
-        <input type="hidden" name="id" value="{{ task.task_id }}">
-        <button type="submit" id="delete">Done</button>
-    </form>
+        {% if task.section_id == None %}
+            <p>{{ task.task_text }}</p>
+            <form action="/delete" method="post">
+                <input type="hidden" name="id" value="{{ task.task_id }}">
+                <button type="submit" id="delete">Done</button>
+            </form>
+            <form action="/move-between-section" method="post">
+                <input type="hidden" name="task-id" value="{{ task.task_id }}">
+                <h5>Move To:</h5>
+                <select name="to-section">
+                    <option selected value>Main</option>
+                    {% for section in sections %}
+                        <option value="{{ section.section_id}}">{{ section.section_name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Move</button>
+            </form>
+        {% endif %}
     {% endfor %}
 </ul>
+<!--Render all other sections-->
+{% for section in sections %}
+    <h3>{{ section.section_name }}</h3>
+    <form method="post" action="/section-delete">
+        <input type="hidden" name="section-id" value="{{ section.section_id }}">
+        <button type="submit">Delete Section</button>
+    </form>
+    <form method="post" action="/section-delete-all">
+        <input type="hidden" name="section-id" value="{{ section.section_id }}">
+        <button type="submit">Delete Section and Tasks</button>
+    </form>
+    <ul id="todo-list">
+        {% for task in tasks %}
+            {% if task.section_id == section.section_id %}
+                <p>{{ task.task_text }}</p>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="id" value="{{ task.task_id }}">
+                    <button type="submit" id="delete">Done</button>
+                </form>
+                <form action="/move-between-section" method="post">
+                    <input type="hidden" name="task-id" value="{{ task.task_id }}">
+                    <h5>Move To:</h5>
+                    <select name="to-section">
+                        <option selected value>Main</option>
+                        {% for section in sections %}
+                            <option value="{{ section.section_id}}">{{ section.section_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Move</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endfor %}
 {% endblock %}
