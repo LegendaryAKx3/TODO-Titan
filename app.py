@@ -40,18 +40,29 @@ def error(message):
 @login_required
 def homepage():
     if request.method == "GET":
-        return render_template("index.html", tasks = db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]))
+        return render_template(
+            "index.html",
+            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]),
+        )
     else:
-        db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
+        db.execute(
+            "INSERT INTO tasks (task_text, uuid) VALUES(?, ?);",
+            request.form.get("task"),
+            session["uuid"],
+        )
         return redirect("/")
 
 
 @app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-    # Delete task where task and user id match up 
+    # Delete task where task and user id match up
     # won't go through if user is not logged in to the account corresponding to the task
-    db.execute("DELETE FROM tasks WHERE (uuid = ? AND task_id = ?);", session["uuid"], request.form.get("id"))
+    db.execute(
+        "DELETE FROM tasks WHERE (uuid = ? AND task_id = ?);",
+        session["uuid"],
+        request.form.get("id"),
+    )
     return redirect("/")
 
 
@@ -64,7 +75,9 @@ def login():
     if request.method == "POST":
         # Check both username and password are submitted
         if (not request.form.get("username")) or (not request.form.get("password")):
-            return error("Submitted fields cannot be blank")
+            return render_template(
+                "login.html", error="Please enter both username and password"
+            )
 
         user = db.execute(
             "SELECT * FROM accounts WHERE username = ?", request.form.get("username")
@@ -75,7 +88,7 @@ def login():
         if len(user) != 1 or not check_password_hash(
             user[0]["hash"], request.form.get("password")
         ):
-            return error("Invalid login information")
+            return render_template("login.html", error="Invalid login information")
 
         # store account login status until session is cleared
         session["uuid"] = user[0]["id"]

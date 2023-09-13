@@ -4,16 +4,31 @@ Login
 {% endblock %}
 {% block body %}
 
+<div id="login-error">
+    <p id="login-error-msg">{{ error }}</p>
+</div>
 
-<form action="/login" method="post" id="login-page">
+
+<div class="login-page">
+    <div id="log-in">
+        <h1 id="login-title">TODO Titan</h1>
+
+        <form action="/login" method="post" id="log-form">
+
+            <input autocomplete="off" autofocus id="username" name="username" placeholder="Username" type="text">
+
+            <input id="password" name="password" placeholder="Password" type="password">
+            <button class="btn btn-primary" type="submit" id="login-btn">Log in</button>
+        </form>
+    </div>
+    <div class="login-bottom-btns">
+        <br>
+        <form action="/register" method="get" id="register-link">
+            <p>Don't have an account? <a href="/register">Sign Up</a></p>
+        </form>
+    </div>
+</div>
 
 
-    <h1 id="login-title">TODO Titan</h1>
 
-    <input autocomplete="off" autofocus id="username" name="username" placeholder="Username" type="text">
-
-    <input id="password" name="password" placeholder="Password" type="password">
-
-    <button class="btn btn-primary" type="submit" id="login-btn">Log in</button>
-</form>
 {% endblock %}

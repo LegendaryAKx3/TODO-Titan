@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
 
@@ -25,10 +23,6 @@
         {% if session["uuid"] %}
         <form action="/logout" method="get">
             <button type="submit" id="logout-btn">Log Out</button>
-        </form>
-        {% else %}
-        <form action="/register" method="get">
-            <button type="submit" class="green-btn">Register</button>
         </form>
         {% endif %}
     </div>
