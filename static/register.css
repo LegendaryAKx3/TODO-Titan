@@ -1,0 +1,63 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(to right, #6a68ea 0%, #ca3aca 100%);
+}
+
+.register-page {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#register-btn {
+    margin: 0.5rem 0.25rem;
+    padding: 0.5rem 2.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 1rem;
+    outline: none;
+    background-color: rgb(0, 66, 128);
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+#register-btn:hover {
+    background-color: #335d8a;
+}
+
+#register-title {
+    font-size: 2.5rem;
+    margin: 0.5rem 0.25rem;
+    justify-content: center;
+    text-align: center;
+}
+
+#username,
+#password {
+    margin: 0.5rem 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #282c34;
+    border-radius: 0.25rem;
+    outline: none;
+    background-color: #282c34;
+    text-align: center;
+    color: white;
+}
