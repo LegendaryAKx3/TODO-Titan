@@ -67,7 +67,7 @@ body {
 
 
 .open-button {
-    background-color: #555;
+    background-color: #38383f;
     color: white;
     padding: 16px 20px;
     border: none;
@@ -76,7 +76,9 @@ body {
     position: fixed;
     bottom: 23px;
     right: 28px;
-    width: 280px;
+    width: 180px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px 20px rgba(0, 0, 0, 0.1);
 }
 
 .form-popup {
@@ -103,6 +105,8 @@ body {
     border: none;
     background: #f1f1f1;
 }
+
+
 
 .form-container input[type=text]:focus,
 .form-container input[type=password]:focus {
