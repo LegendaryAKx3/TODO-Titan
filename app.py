@@ -41,17 +41,31 @@ def error(message):
 @login_required
 def homepage():
     if request.method == "GET":
-        return render_template("index.html", 
-                               tasks = db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]), 
-                               sections=db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"]))
+        return render_template(
+            "index.html",
+            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]),
+            sections=db.execute(
+                "SELECT * FROM sections WHERE uuid = ?", session["uuid"]
+            ),
+        )
     else:
         # Only add section id to db if section is specified
         if request.form.get("section") != "":
-            db.execute("INSERT INTO tasks (task_text, uuid, section_id) VALUES(?, ?, ?);", request.form.get("task"), session["uuid"], request.form.get("section"))
+            db.execute(
+                "INSERT INTO tasks (task_text, uuid, section_id) VALUES(?, ?, ?);",
+                request.form.get("task"),
+                session["uuid"],
+                request.form.get("section"),
+            )
         else:
-            db.execute("INSERT INTO tasks (task_text, uuid) VALUES(?, ?);", request.form.get("task"), session["uuid"])
+            db.execute(
+                "INSERT INTO tasks (task_text, uuid) VALUES(?, ?);",
+                request.form.get("task"),
+                session["uuid"],
+            )
         return redirect("/")
-    
+
+
 @app.route("/section-create", methods=["POST"])
 @login_required
 def create_section():
@@ -61,49 +75,86 @@ def create_section():
     for section in user_sections:
         if section["section_name"].lower() == name.lower():
             error("Duplicate section name")
-    
-    db.execute("INSERT INTO sections (section_name, uuid) VALUES(?, ?);", name.title(), session["uuid"])
+    # Prevent empty section names
+    if name == "":
+        error("Section name cannot be empty")
+
+    db.execute(
+        "INSERT INTO sections (section_name, uuid) VALUES(?, ?);",
+        name.title(),
+        session["uuid"],
+    )
     return redirect("/")
+
 
 @app.route("/section-delete-all", methods=["POST"])
 @login_required
 def delete_section_all():
-    '''Delete section and tasks within it'''
-    # Delete section from section table where section and user id match up 
+    """Delete section and tasks within it"""
+    # Delete section from section table where section and user id match up
     # won't go through if user is not logged in to the account corresponding to the section
-    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
+    db.execute(
+        "DELETE FROM sections WHERE (section_id = ? AND uuid = ?);",
+        request.form.get("section-id"),
+        session["uuid"],
+    )
 
     # delete tasks within deleted section
-    db.execute("DELETE FROM tasks WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
+    db.execute(
+        "DELETE FROM tasks WHERE (section_id = ? AND uuid = ?);",
+        request.form.get("section-id"),
+        session["uuid"],
+    )
     return redirect("/")
+
 
 @app.route("/move-between-section", methods=["POST"])
 @login_required
 def move_between_section():
-    '''Move task between sections'''
+    """Move task between sections"""
     section_to = request.form.get("to-section")
     task_id = request.form.get("task-id")
-    if db.execute("SELECT * FROM tasks WHERE(task_id = ?);", task_id)[0]["uuid"] != session["uuid"]:
+    if (
+        db.execute("SELECT * FROM tasks WHERE(task_id = ?);", task_id)[0]["uuid"]
+        != session["uuid"]
+    ):
         error("Invalid request")
 
     if section_to != "":
-        db.execute("UPDATE tasks SET section_id = ? WHERE (task_id = ? AND uuid = ?);", section_to, task_id, session["uuid"] )
+        db.execute(
+            "UPDATE tasks SET section_id = ? WHERE (task_id = ? AND uuid = ?);",
+            section_to,
+            task_id,
+            session["uuid"],
+        )
     else:
-        db.execute("UPDATE tasks SET section_id = NULL WHERE (task_id = ? AND uuid = ?);", task_id, session["uuid"] )
+        db.execute(
+            "UPDATE tasks SET section_id = NULL WHERE (task_id = ? AND uuid = ?);",
+            task_id,
+            session["uuid"],
+        )
     return redirect("/")
+
 
 @app.route("/section-delete", methods=["POST"])
 @login_required
 def delete_section():
-    '''Delete section and send all contained tasks to main section'''
-    # Delete section where section and user id match up 
+    """Delete section and send all contained tasks to main section"""
+    # Delete section where section and user id match up
     # won't go through if user is not logged in to the account corresponding to the section
-    db.execute("DELETE FROM sections WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
+    db.execute(
+        "DELETE FROM sections WHERE (section_id = ? AND uuid = ?);",
+        request.form.get("section-id"),
+        session["uuid"],
+    )
 
     # Send all contained tasks to main section
-    db.execute("UPDATE tasks SET section_id = NULL WHERE (section_id = ? AND uuid = ?);", request.form.get("section-id"), session["uuid"])
+    db.execute(
+        "UPDATE tasks SET section_id = NULL WHERE (section_id = ? AND uuid = ?);",
+        request.form.get("section-id"),
+        session["uuid"],
+    )
     return redirect("/")
-
 
 
 @app.route("/delete", methods=["POST"])
@@ -180,7 +231,9 @@ def register():
             return error("Invalid Password or Confirmation")
 
         elif (len(password) < 8) or (password.lower() == password):
-            return error("Password Must be at Least 8 Characters Long and Contain A Capital Letter")
+            return error(
+                "Password Must be at Least 8 Characters Long and Contain A Capital Letter"
+            )
 
         db.execute(
             "INSERT INTO accounts (username, hash) VALUES(?, ?);",
