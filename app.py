@@ -19,7 +19,7 @@ db = SQL("sqlite:///todotitan.db")
 
 # SQL table structure
 # CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);
-# CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, uuid INTEGER NOT NULL, section_id INTEGER);
+# CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, uuid INTEGER NOT NULL, section_id INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
 # CREATE TABLE sections (section_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, uuid INTEGER NOT NULL, section_name TEXT NOT NULL);
 def login_required(f):
     """Code from CS50 finance"""
@@ -43,7 +43,7 @@ def homepage():
     if request.method == "GET":
         return render_template(
             "index.html",
-            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ?", session["uuid"]),
+            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC", session["uuid"]),
             sections=db.execute(
                 "SELECT * FROM sections WHERE uuid = ?", session["uuid"]
             ),
