@@ -220,19 +220,21 @@ def register():
         confirmation = request.form.get("confirmation")
 
         if not username:
-            return error("Username field cannot be empty")
+            return render_template("register.html", error="Username field cannot be empty")
 
         for entry in db.execute("SELECT username FROM accounts;"):
             if username == entry["username"]:
-                return error("Username is Already Taken")
+                return render_template("register.html", error="Username is Already Taken")
+
 
         # check password valididty
         if password != confirmation or (not password) or (not confirmation):
-            return error("Invalid Password or Confirmation")
+            return render_template("register.html", error="Invalid password or confirmation")
 
         elif (len(password) < 8) or (password.lower() == password):
-            return error(
-                "Password Must be at Least 8 Characters Long and Contain A Capital Letter"
+            return render_template(
+                "register.html",
+                error="Password Must be at Least 8 Characters Long and Contain A Capital Letter"
             )
 
         db.execute(
