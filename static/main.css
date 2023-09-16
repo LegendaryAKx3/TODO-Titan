@@ -33,6 +33,27 @@ body {
     box-sizing: border-box;
 }
 
+#todo-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    padding: 25px;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+
+#todo-itm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
 
 #add-btn,
 #task-form {
@@ -50,9 +71,9 @@ body {
 
 #todo-index {
     background: #fff;
-    max-width: 900px;
+    max-width: 700px;
     height: 100%;
-    margin: 120px auto;
+    margin: 100px auto;
     padding: 25px;
     border-radius: 5px;
     box-shadow: 0px 10px 15px 20px rgba(0, 0, 0, 0.1);
@@ -162,6 +183,7 @@ body {
     margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
+    position: fixed;
 }
 
 /*
@@ -185,6 +207,7 @@ li {
     box-shadow: 0px 10px 15px 20px rgba(0, 0, 0, 0.1);
 }
 */
+/*
 ul {
     list-style: none;
     display: grid;
@@ -203,3 +226,4 @@ li {
     background: tomato;
     padding: 1em;
 }
+*/
