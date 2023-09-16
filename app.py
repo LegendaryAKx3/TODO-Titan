@@ -76,7 +76,7 @@ def create_section():
         if section["section_name"].lower() == name.lower():
             error("Duplicate section name")
     # Prevent empty section names
-    if name == "":
+    if name.isspace():
         error("Section name cannot be empty")
 
     db.execute(
