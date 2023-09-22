@@ -10,8 +10,7 @@ To-do list webapp written with flask. Users are able to log in to unique and sec
 Consists of a form for users to submit with a field for username, password and for password confirmation, which is standard across all websites. Username was chosen instead of email because email was deemed not nessecary for this service, and would add an extra layer of complication to the process. The information gathered from the user is verified as legitimate then added to the users database. This page also has a link redirecting to the login page, in case someone with an account is directed here by mistake. 
 
 #### Login
-
-
+Users input username and password into corresponding fields, then submit form. Information is then checked against user database, and if verified, the user is logged in with ther user id stored in their session. Having this user id stored will allow the user to access all portions of the app where login is required, enforced by the login_required function.
 
 #### Logout
 Clears the session information and redirects user to the login page
