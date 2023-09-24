@@ -27,3 +27,4 @@ In the options section of each task, there is a drop down to move the task into 
 Each task consists of a form with a checkmark button from bootstrap submitting the form and a hidden element containing the tasks id, as well as a visible task name section.
 
 #### Sections
+When the section form is submitted, a new section is created under that name with a unique id. Tasks are added to sections in the creating tasks form, and this is done by id, not by name, to prevent duplicate name conflicts. Sections also have buttons to delete the section and delete the section and send all the remaining tasks to the main section, or delete the section with all the tasks in it.
