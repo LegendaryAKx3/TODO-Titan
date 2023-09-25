@@ -74,10 +74,12 @@ def create_section():
     user_sections = db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"])
     for section in user_sections:
         if section["section_name"].lower() == name.lower():
-            error("Duplicate section name")
+            return error("Duplicate section name")
     # Prevent empty section names
-    if name.isspace():
-        error("Section name cannot be empty")
+
+    if name.strip() == '':
+        return error("Section name cannot be empty")
+        
 
     db.execute(
         "INSERT INTO sections (section_name, uuid) VALUES(?, ?);",
