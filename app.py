@@ -34,7 +34,10 @@ def login_required(f):
 
 
 def error(message):
-    return render_template("error.html", message=message)
+    return render_template("index.html", error=message,
+            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC", session["uuid"]),
+            sections=db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"]),
+    )
 
 
 @app.route("/", methods=["GET", "POST"])

@@ -8,6 +8,11 @@ Home
 <div id="todo-index">
     <h1>TODO Titan</h1>
     <br>
+    {% if error %}
+        <div class="alert alert-danger">
+            <strong>Error: </strong> {{ error }}
+        </div>
+    {% endif %}
     <h3>Main</h3>
     <ul id="todo-list">
         {% for task in tasks %}
