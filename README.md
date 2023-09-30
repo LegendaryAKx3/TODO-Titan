@@ -15,7 +15,7 @@ Users input username and password into corresponding fields, then submit form. I
 Clears the session information and redirects user to the login page
 
 #### Layout/homepage
-The homepage is the core of any app. This app has the homepage as one of three screens (others being login and register). This page has all the sections, tasks, and buttons to manage your list. Any addition or deletion of section or task redirects you back to the homepage and updates the html to reflect the user's change.
+The homepage is the core of any app. This app has the homepage as one of three screens (others being login and register). This page has all the sections, tasks, and buttons to manage your list. Any addition or deletion of section or task redirects you back to the homepage and updates the html to reflect the user's change. The homepage has a logout button in the top, giving ways for a user to sign out of the current account. There is a popup form for creating tasks (if we were to do this project again, we would probably remove that). The form uses javascript to update an attribute that shows the form when the "Add Task" button is clicked. The form code is contained in a script tag.
 
 #### Creating tasks
 To create tasks, a form is submitted containing the name of the task and the section that the task is going to be added to. The section is read from the sections database when the page loads. Once a task is submitted, it is added to the tasks database under that user's id, and given a unique id that is used until the task is completed. If the section selected is main, the section_id value is set to null. Otherwise, it is set to the value of the corresponding section's id. After this action is executed, the page is refreshed to reflect changes.
