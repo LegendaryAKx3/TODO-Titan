@@ -28,3 +28,13 @@ Each task consists of a form with a checkmark button from Bootstrap submitting t
 
 #### Sections
 When the section form is submitted, a new section is created under that name with a unique id. Tasks are added to sections in the creating tasks form, and this is done by id, not by name, to prevent duplicate name conflicts. Sections also have buttons to delete the section and delete the section and send all the remaining tasks to the main section, or delete the section with all the tasks in it.
+
+*Sqlite startup commands*
+Create accounts table
+`CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);`
+
+Create tasks table
+`CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, uuid INTEGER NOT NULL, section_id INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);`
+
+Create sections table
+`CREATE TABLE sections (section_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, uuid INTEGER NOT NULL, section_name TEXT NOT NULL);`

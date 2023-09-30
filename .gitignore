@@ -1,6 +1,4 @@
 __pycache__
 flask_session/
-
 .venv
-
 todotitan.db

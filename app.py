@@ -18,9 +18,6 @@ db = SQL("sqlite:///todotitan.db")
 
 
 # SQL table structure
-# CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);
-# CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, uuid INTEGER NOT NULL, section_id INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);
-# CREATE TABLE sections (section_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, uuid INTEGER NOT NULL, section_name TEXT NOT NULL);
 def login_required(f):
     """Code from CS50 finance"""
 
@@ -34,9 +31,13 @@ def login_required(f):
 
 
 def error(message):
-    return render_template("index.html", error=message,
-            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC", session["uuid"]),
-            sections=db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"]),
+    return render_template(
+        "index.html",
+        error=message,
+        tasks=db.execute(
+            "SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC", session["uuid"]
+        ),
+        sections=db.execute("SELECT * FROM sections WHERE uuid = ?", session["uuid"]),
     )
 
 
@@ -46,7 +47,10 @@ def homepage():
     if request.method == "GET":
         return render_template(
             "index.html",
-            tasks=db.execute("SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC", session["uuid"]),
+            tasks=db.execute(
+                "SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC",
+                session["uuid"],
+            ),
             sections=db.execute(
                 "SELECT * FROM sections WHERE uuid = ?", session["uuid"]
             ),
@@ -80,9 +84,8 @@ def create_section():
             return error("Duplicate section name")
     # Prevent empty section names
 
-    if name.strip() == '':
+    if name.strip() == "":
         return error("Section name cannot be empty")
-        
 
     db.execute(
         "INSERT INTO sections (section_name, uuid) VALUES(?, ?);",
@@ -97,7 +100,7 @@ def create_section():
 def delete_section_all():
     """Delete section and tasks within it"""
     # Delete section from section table where section and user id match up
-    # won't go through if user is not logged in to the account corresponding to the section
+    # won't go through if user not logged in to the account corresponding to the section
     db.execute(
         "DELETE FROM sections WHERE (section_id = ? AND uuid = ?);",
         request.form.get("section-id"),
@@ -146,7 +149,7 @@ def move_between_section():
 def delete_section():
     """Delete section and send all contained tasks to main section"""
     # Delete section where section and user id match up
-    # won't go through if user is not logged in to the account corresponding to the section
+    # won't go through if user not logged in to the account corresponding to the section
     db.execute(
         "DELETE FROM sections WHERE (section_id = ? AND uuid = ?);",
         request.form.get("section-id"),
@@ -225,21 +228,26 @@ def register():
         confirmation = request.form.get("confirmation")
 
         if not username:
-            return render_template("register.html", error="Username field cannot be empty")
+            return render_template(
+                "register.html", error="Username field cannot be empty"
+            )
 
         for entry in db.execute("SELECT username FROM accounts;"):
             if username == entry["username"]:
-                return render_template("register.html", error="Username is Already Taken")
-
+                return render_template(
+                    "register.html", error="Username is Already Taken"
+                )
 
         # check password valididty
         if password != confirmation or (not password) or (not confirmation):
-            return render_template("register.html", error="Invalid password or confirmation")
+            return render_template(
+                "register.html", error="Invalid password or confirmation"
+            )
 
         elif (len(password) < 8) or (password.lower() == password):
             return render_template(
                 "register.html",
-                error="Password Must be at Least 8 Characters Long and Contain A Capital Letter"
+                error="Password Must be at Least 8 Characters Long and Contain a Capital Letter",
             )
 
         db.execute(
