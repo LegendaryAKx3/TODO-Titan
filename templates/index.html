@@ -7,74 +7,117 @@ Home
 {% block body %}
 <div id="todo-index">
     <h1>TODO Titan</h1>
-    <br>
-    <h3>Main</h3>
-    <ul id="todo-list">
+    {% for task in tasks %}
+    {% if task.section_id == None %}
+    <div id="todo-itm">
+        <form action="/delete" method="post">
+            <input type="hidden" name="id" value="{{ task.task_id }}">
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i></i></button>
+        </form>
+        <div id="content-drop">
+            <p class="task-text">{{ task.task_text }}</p>
+
+            <!--inspired by: https://dcodingsourcecode.darija-coding.com/tutorial/how-to-create-three-dots-dropdown-menu-in-bootstrap-5-->
+            <div class="card" style="background-color: transparent; border: transparent">
+                <div class="dropdown ms-auto dot-dropdown">
+                    <i class="fas fa-ellipsis-vertical dot-dropdown" data-bs-toggle="dropdown"
+                        aria-expanded="false"></i>
+                    <ul class="dropdown-menu">
+                        <li>
+                        <li>
+                            <span class="dropdown-item">
+                                <form action="/move-between-section" method="post" id="move-form">
+                                    <input type="hidden" name="task-id" value="{{ task.task_id }}">
+                                    <select name="to-section">
+                                        <option selected value>Main</option>
+                                        {% for section in sections %}
+                                        <option value="{{ section.section_id}}">{{ section.section_name
+                                            }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-light">Move</button>
+                                    <!--make submit when unfocus-->
+                                </form>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <div class="sections">
+        {% for section in sections %}
+        <div id="ind-section">
+            <h3 style="margin-right: 10px">{{ section.section_name }}</h3>
+            <div id="section-style">
+                <form method="post" action="/section-delete">
+                    <div class="card" style="background-color: transparent; border: transparent">
+                        <div class="dropdown ms-auto dot-dropdown">
+                            <i class="fas fa-ellipsis-vertical dot-dropdown" data-bs-toggle="dropdown"
+                                aria-expanded="false"></i>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <input type="hidden" name="section-id" value="{{ section.section_id }}">
+                                    <button type="submit">Delete Section</button>
+                                </li>
+                                <li>
+                                    <span class="dropdown-item">
+                                        <form method="post" action="/section-delete-all">
+                                            <input type="hidden" name="section-id" value="{{ section.section_id }}">
+                                            <button type="submit">Delete Section and Tasks</button>
+                                        </form>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         {% for task in tasks %}
-        {% if task.section_id == None %}
+        {% if task.section_id == section.section_id %}
         <div id="todo-itm">
             <form action="/delete" method="post">
                 <input type="hidden" name="id" value="{{ task.task_id }}">
-                <button type="submit" id="delete">Done</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i></i></button>
             </form>
-            <p>{{ task.task_text }}</p>
-            <form action="/move-between-section" method="post">
-                <input type="hidden" name="task-id" value="{{ task.task_id }}">
-                <!-- <h5>Move To:</h5> -->
-                <select name="to-section">
-                    <option selected value>Main</option>
-                    {% for section in sections %}
-                    <option value="{{ section.section_id}}">{{ section.section_name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Move</button>
-            </form>
+            <div id="content-drop">
+                <p class="task-text">{{ task.task_text }}</p>
+
+                <!--inspired by: https://dcodingsourcecode.darija-coding.com/tutorial/how-to-create-three-dots-dropdown-menu-in-bootstrap-5-->
+                <div class="card" style="background-color: transparent; border: transparent">
+                    <div class="dropdown ms-auto dot-dropdown">
+                        <i class="fas fa-ellipsis-vertical dot-dropdown" data-bs-toggle="dropdown"
+                            aria-expanded="false"></i>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <span class="dropdown-item">
+                                    <form action="/move-between-section" method="post" id="move-form">
+                                        <input type="hidden" name="task-id" value="{{ task.task_id }}">
+                                        <select name="to-section">
+                                            <option selected value>Main</option>
+                                            {% for section in sections %}
+                                            <option value="{{ section.section_id}}">{{ section.section_name
+                                                }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <button type="submit" class="btn btn-light">Move</button>
+                                        <!--make submit when unfocus-->
+                                    </form>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         {% endif %}
         {% endfor %}
-    </ul>
-</div>
-
-<!--
-<ul>
-    <li class="">An item</li>
-</ul>
--->
-
-<div class="sections">
-    {% for section in sections %}
-    <h3>{{ section.section_name }}</h3>
-    <form method="post" action="/section-delete">
-        <input type="hidden" name="section-id" value="{{ section.section_id }}">
-        <button type="submit">Delete Section</button>
-    </form>
-    <form method="post" action="/section-delete-all">
-        <input type="hidden" name="section-id" value="{{ section.section_id }}">
-        <button type="submit">Delete Section and Tasks</button>
-    </form>
-    <ul id="todo-list">
-        {% for task in tasks %}
-        {% if task.section_id == section.section_id %}
-        <p>{{ task.task_text }}</p>
-        <form action="/delete" method="post">
-            <input type="hidden" name="id" value="{{ task.task_id }}">
-            <button type="submit" id="delete">Done</button>
-        </form>
-        <form action="/move-between-section" method="post">
-            <input type="hidden" name="task-id" value="{{ task.task_id }}">
-            <h5>Move To:</h5>
-            <select name="to-section">
-                <option selected value>Main</option>
-                {% for section in sections %}
-                <option value="{{ section.section_id}}">{{ section.section_name }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Move</button>
-        </form>
-        {% endif %}
         {% endfor %}
-    </ul>
-    {% endfor %}
+    </div>
 </div>
 <!--POPUP-->
 <button class="open-button" role="button" onclick="openForm()">Add Task</button>
@@ -84,9 +127,9 @@ Home
         <h1>Add Task</h1>
 
         <label for="create-task"><b>Task</b></label>
-        <input type="text" placeholder="Enter a Task" name="task" required autocomplete="off">
+        <input type="text" placeholder="Enter a Task" name="task" required autocomplete="off" autofocus>
 
-        <select name="section">
+        <select class="form-select" aria-label="Default select example">
             <option selected value>Main</option>
             {% for section in sections %}
             <option value="{{ section.section_id }}">{{ section.section_name }}</option>
@@ -109,9 +152,12 @@ Home
 
 <div id="add-section">
     <h4>Add Section</h4>
-    <form action="/section-create" method="post">
-        <input autocomplete="off" name="section" placeholder="Section Name">
-        <button type="submit">Create</button>
-    </form>
+    <div id="sect-form">
+        <form action="/section-create" method="post">
+            <input autocomplete="off" class="form-control" aria-describedby="emailHelp" placeholder="Section name"
+                name="section">
+            <button type="submit" class="btn btn-light" style="margin-top: 5px;">Create</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

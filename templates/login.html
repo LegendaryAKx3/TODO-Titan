@@ -23,7 +23,7 @@ Login
             <input id="password" name="password" placeholder="Password" type="password">
             <button class="btn btn-primary" type="submit" id="login-btn">Log in</button>
             {% if error %}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger error-login">
                 <strong>Error: </strong> {{ error }}
             </div>
             {% endif %}
@@ -36,7 +36,4 @@ Login
         </form>
     </div>
 </div>
-
-
-
 {% endblock %}

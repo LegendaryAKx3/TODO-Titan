@@ -78,4 +78,6 @@ body {
     justify-content: center;
 }
 
-/* LOGIN ERROR */
+.error-login {
+    margin-top: 1rem;
+}
