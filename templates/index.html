@@ -129,8 +129,8 @@ Home
         <label for="create-task"><b>Task</b></label>
         <input type="text" placeholder="Enter a Task" name="task" required autocomplete="off" autofocus>
 
-        <select class="form-select" aria-label="Default select example">
-            <option selected value>Main</option>
+        <select name="section" class="form-select" aria-label="Default select example">
+            <option selected value=>Main</option>
             {% for section in sections %}
             <option value="{{ section.section_id }}">{{ section.section_name }}</option>
             {% endfor %}
