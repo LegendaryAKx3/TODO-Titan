@@ -59,16 +59,18 @@ def homepage():
         # Only add section id to db if section is specified
         if request.form.get("section") != "":
             db.execute(
-                "INSERT INTO tasks (task_text, uuid, section_id) VALUES(?, ?, ?);",
+                "INSERT INTO tasks (task_text, uuid, section_id, task_note) VALUES(?, ?, ?, ?);",
                 request.form.get("task"),
                 session["uuid"],
                 request.form.get("section"),
+                ""
             )
         else:
             db.execute(
-                "INSERT INTO tasks (task_text, uuid) VALUES(?, ?);",
+                "INSERT INTO tasks (task_text, uuid, task_note) VALUES(?, ?, ?);",
                 request.form.get("task"),
                 session["uuid"],
+                ""
             )
         return redirect("/")
 
