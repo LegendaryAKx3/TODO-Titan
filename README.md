@@ -34,6 +34,6 @@ When the section form is submitted, a new section is created under that name wit
 
 - `CREATE TABLE accounts (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);`
 
-- `CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, uuid INTEGER NOT NULL, section_id INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);`
+- `CREATE TABLE tasks (task_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, task_text TEXT NOT NULL, task_note TEXT, uuid INTEGER NOT NULL, section_id INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);`
 
 - `CREATE TABLE sections (section_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, uuid INTEGER NOT NULL, section_name TEXT NOT NULL);`
