@@ -177,6 +177,15 @@ def delete():
     )
     return redirect("/")
 
+@app.route("/edit_note", methods=["POST"])
+@login_required
+def edit_note():
+    # Edit/Add note to user's task
+    db.execute("UPDATE tasks SET task_note = ? WHERE uuid = ? AND task_id = ?",
+                request.form.get("note"), 
+                session["uuid"], 
+                request.form.get("task-id"))
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -257,3 +266,4 @@ def register():
         )
         return redirect("/")
     return render_template("register.html")
+
