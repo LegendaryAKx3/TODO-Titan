@@ -49,7 +49,7 @@ def homepage():
             "index.html",
             tasks=db.execute(
                 "SELECT * FROM tasks WHERE uuid = ? ORDER BY timestamp ASC",
-                session["uuid"],
+                session["uuid"]
             ),
             sections=db.execute(
                 "SELECT * FROM sections WHERE uuid = ?", session["uuid"]
@@ -181,10 +181,12 @@ def delete():
 @login_required
 def edit_note():
     # Edit/Add note to user's task
-    db.execute("UPDATE tasks SET task_note = ? WHERE uuid = ? AND task_id = ?",
+    db.execute(
+        "UPDATE tasks SET task_note = ? WHERE (uuid = ? AND task_id = ?);",
                 request.form.get("note"), 
                 session["uuid"], 
                 request.form.get("task-id"))
+    return redirect("/")
 
 
 @app.route("/login", methods=["GET", "POST"])

@@ -16,7 +16,7 @@ Home
         </form>
         <div id="content-drop">
             <p class="task-text">{{ task.task_text }}</p>
-            <p>{{task.task_note}}</p>
+            <p>{{ task.task_note }}</p>
 
             <!--inspired by: https://dcodingsourcecode.darija-coding.com/tutorial/how-to-create-three-dots-dropdown-menu-in-bootstrap-5-->
             <div class="card" style="background-color: transparent; border: transparent">
@@ -44,7 +44,7 @@ Home
                         <li>
                             <form action ="/edit_note" id="edit-form" method="post">
                                 <input type="hidden" name="task-id" value="{{ task.task_id }}">
-                                <input type="text" id="note" placeholder="Note">
+                                <input type="text" name="note" placeholder="Note">
                                 <button type="submit">Add</button>
                             </form>
                         </li>
@@ -121,7 +121,7 @@ Home
                             <li>
                                 <form action ="/edit_note" id="edit-form" method="post">
                                     <input type="hidden" name="task-id" value="{{ task.task_id }}">
-                                    <input type="text" id="note" placeholder="Note">
+                                    <input type="text" name="note" placeholder="Note">
                                     <button type="submit">Add</button>
                                 </form>
                             </li>
