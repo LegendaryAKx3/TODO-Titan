@@ -16,8 +16,6 @@ Session(app)
 # Initialize database with cs50 library
 db = SQL("sqlite:///todotitan.db")
 
-
-# SQL table structure
 def login_required(f):
     """Code from CS50 finance"""
 
