@@ -1,7 +1,5 @@
 # TODO-Titan
 
-#### Video Demonstration: https://youtu.be/Rbvzv6TB5Vw
-
 ### Description
 To-do list webapp written with flask. Users are able to log in to unique and secure accounts and create, move and complete their own tasks. Follows the CRUD list and stores data in SQLite.
 
